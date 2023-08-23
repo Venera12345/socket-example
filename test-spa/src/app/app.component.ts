@@ -20,10 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void>;
   private filter$: BehaviorSubject<string[]>;
   private timer$: BehaviorSubject<number>;
-  private subscription: Subscription;
 
   constructor(private itemService: ItemService) {
-    this.subscription = new Subscription();
     this.filter$ = new BehaviorSubject<string[]>([]);
     this.destroy$ = new Subject<void>();
     this.listItems$ = new BehaviorSubject<IItem[]>([]);
