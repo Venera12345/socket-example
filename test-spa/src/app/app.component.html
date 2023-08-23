@@ -1,0 +1,14 @@
+<div class="app-panel" role="banner">
+<div class="app-panel__wrapper-border">
+<div class="app-panel__wrapper">
+  <app-input-component [input]="timerInput" [label]="'Timer, ms'" [type]="'string'" (keyuUpEvent)="editTimer($event)" [setFilter]="false"></app-input-component>
+  <app-input-component [input]="arraySizeInput" [label]="'Array size'" [type]="'number'" (keyuUpEvent)="editArray($event)" [setFilter]="false"></app-input-component>
+  <app-input-component [input]="additionalArrayIdsInput" [label]="'Additional array ids'" [type]="'string'" (keyuUpEvent)="editArrayId($event)" [setFilter]="true"></app-input-component>
+ </div>
+
+<div class="app-panel__wrapper-table" cdkScrollable *ngIf="listItems$ | async as dataSource">
+<app-table-component [dataSource]="dataSource"></app-table-component>
+</div>
+</div>
+</div>
+ 

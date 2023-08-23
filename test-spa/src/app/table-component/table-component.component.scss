@@ -1,0 +1,36 @@
+.app-panel__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px 20px;
+    td {
+        text-align: center;
+        padding: 10px 0px;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        width: 150px;
+        &:first-of-type {
+            border-left: 1px solid black;
+        }
+        &:last-of-type {
+            border-right: 1px solid black;
+        }
+    }
+}
+
+.app-panel__table-child {
+    width: 120px;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: 10px;
+    td {
+        text-align: center;
+        padding: 5px 0px;
+        border: none;
+        &:first-of-type {
+            border: none;
+        }
+        &:last-of-type {
+            border: none;
+        }
+    }
+}

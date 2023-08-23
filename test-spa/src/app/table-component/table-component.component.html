@@ -1,0 +1,33 @@
+<table class="app-panel__table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>int</th>
+        <th>float</th>
+        <th>color</th>
+        <th>child</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource">
+      <tr>
+        <td>{{item.id}}</td>
+        <td>{{item.int}}</td>
+        <td>{{item.float | number : '1.0-8' }}</td> 
+        <td><span [style.background]="item.color">{{item.color}}</span></td>
+        <td>
+        <table class="app-panel__table-child">
+          <tr>
+            <td>id</td>
+            <td>color</td>
+          </tr>
+          <tr>
+            <td>{{item.child.id}}</td>
+            <td><span [style.background]="item.child.color">{{item.child.color}}</span></td>
+          </tr>
+        </table>
+      </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
