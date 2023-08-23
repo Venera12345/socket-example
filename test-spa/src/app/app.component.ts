@@ -1,8 +1,6 @@
-import { DataSource } from '@angular/cdk/collections';
-import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, filter, Subscription, tap, takeUntil, Subject, Observable, map, debounce, timer, debounceTime } from 'rxjs';
-import { combineLatest, combineLatestInit } from 'rxjs/internal/observable/combineLatest';
+import { BehaviorSubject, filter, Subscription, tap, takeUntil, Subject, Observable, map } from 'rxjs';
+import { combineLatest } from 'rxjs/internal/observable/combineLatest';
 import { IItem } from './app.models';
 import { ItemService } from './_service/item.service';
 
@@ -21,43 +19,27 @@ export class AppComponent implements OnInit, OnDestroy {
   public listItems$: Observable<IItem[]>;
   private destroy$: Subject<void>;
   private filter$: BehaviorSubject<string[]>;
-  private scroll$: BehaviorSubject<number>;
-  private LIMIT: number = 10;
   private timer$: BehaviorSubject<number>;
   private subscription: Subscription;
-  private heightScroll!: number | null;
 
-  constructor(private itemService: ItemService,
-    private scrollDispatcher: ScrollDispatcher) {
+  constructor(private itemService: ItemService) {
     this.subscription = new Subscription();
     this.filter$ = new BehaviorSubject<string[]>([]);
-    this.scroll$ = new BehaviorSubject<number>(1);
     this.destroy$ = new Subject<void>();
     this.listItems$ = new BehaviorSubject<IItem[]>([]);
     this.timer$ = new BehaviorSubject<number>(300);
-    this.subscription.add(
-    this.scrollDispatcher.scrolled().subscribe((x) => {
-      if( x?.measureScrollOffset('top') && x?.measureScrollOffset('top') >= (x?.getElementRef().nativeElement.scrollHeight - x?.getElementRef().nativeElement.offsetHeight-100) && (!this.heightScroll || this.heightScroll!==x?.getElementRef().nativeElement.scrollHeight)) {
-        this.heightScroll = x?.getElementRef().nativeElement.scrollHeight;
-        this.scroll$.next(this.scroll$.value + 1);
-        // this.itemService.setScroll(this.scrollOffset);
-      }
-    })
-    )
   }
 
   ngOnInit(): void {
     this.listItems$ = combineLatest([
       this.itemService.currentListItems$.pipe(filter(Boolean)),
       this.filter$,
-      this.scroll$,
     ])
     .pipe(
-      map(([list,filter, scroll]: [IItem[], string[], number])=>{
+      map(([list,filter]: [IItem[], string[]])=>{
         const newValueList = filter.length ? list?.filter((item)=>filter?.some((a)=>a === item.id)): list;
-        return newValueList.slice(0, scroll*this.LIMIT);
+        return newValueList;
       }),
-      tap(console.log),
       takeUntil(this.destroy$)
     )
   }
@@ -68,8 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public editArray(event: number): void {
-    this.scroll$.next(1);
-    this.heightScroll = null;
     this.itemService.setTotal(event+ '');
   }
 
@@ -79,10 +59,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public editArrayId(event: string[]): void {
-    this.scroll$.next(1);
-    this.heightScroll = null;
     this.filter$.next(event);
-   // this.itemService.setFilter(event);
   }
+
 }
 

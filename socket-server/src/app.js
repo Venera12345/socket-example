@@ -38,36 +38,9 @@ for (let index = 0; index < TOTAL; index++) {
       total = totalValue;
       offset = 0;
       const valueList = [...new Set(filter.length ? list?.filter((item)=>filter?.some((a)=>a === item.id)): list)];
-      const newValueList = total && total < valueList?.length ? [...new Set(valueList.slice(0, total))]: [...new Set(valueList)];      
-      // let subarray = [];
-      // for (let i = 0; i <Math.ceil(newValueList.length/limit); i++){
-      //     subarray[i] = newValueList.slice((i*limit), (i*limit) + limit);
-      // }   
+      const newValueList = total && total < valueList?.length ? [...new Set(valueList.slice(0, total))]: [...new Set(valueList)];       
       socket.emit('listItems', newValueList);
       });
-
-    // socket.on("setFilter", filterValue => {
-    //   filter = filterValue;
-    //   offset = 0;
-    //   const valueList = [...new Set(filter.length ? list?.filter((item)=>filter?.some((a)=>a === item.id)): list)];
-    //   const newValueList = total && total < valueList?.length ? [...new Set(valueList.slice(0, total))]: [...new Set(valueList)];      
-    //   let subarray = [];
-    //   for (let i = 0; i <Math.ceil(newValueList.length/limit); i++){
-    //       subarray[i] = newValueList.slice((i*limit), (i*limit) + limit);
-    //   }     
-    //   socket.emit('listItems', subarray[offset]);
-    // });
-
-    // socket.on("setScroll", scrollrValue => {
-    //   offset = scrollrValue;
-    //   const valueList = [...new Set(filter.length ? list?.filter((item)=>filter?.some((a)=>a === item.id)): list)];
-    //   const newValueList = total && total <= valueList?.length ? [...new Set(valueList.slice(0, total))]: [...new Set(valueList)]; 
-    //   let subarray = [];
-    //   for (let i = 0; i <Math.ceil(newValueList.length/limit); i++){
-    //         subarray[i] = newValueList.slice((i*limit), (i*limit) + limit);
-    //   }        
-    //   socket.emit('listItems', subarray[offset])
-    // });
 
     socket.on('disconnect', () => {
       filter = [];

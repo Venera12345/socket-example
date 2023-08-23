@@ -6,7 +6,7 @@
   <app-input-component [input]="additionalArrayIdsInput" [label]="'Additional array ids'" [type]="'string'" (keyuUpEvent)="editArrayId($event)" [setFilter]="true"></app-input-component>
  </div>
 
-<div class="app-panel__wrapper-table" cdkScrollable *ngIf="listItems$ | async as dataSource">
+<div class="app-panel__wrapper-table" *ngIf="listItems$ | async as dataSource">
 <app-table-component [dataSource]="dataSource"></app-table-component>
 </div>
 </div>

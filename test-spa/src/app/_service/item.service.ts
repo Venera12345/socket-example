@@ -18,16 +18,9 @@ export class ItemService extends Socket implements OnDestroy {
   }
 
   public setInterval(timer: number): void {
-  this.ioSocket.timeout(timer)
+    this.timer = timer;
+    this.ioSocket.timeout(timer)
   }
-
-  // public setFilter(filter: string[]): void {
-  //   this.emit('setFilter', filter);
-  // }
-
-  // public setScroll(offset: number): void {
-  //   this.emit('setScroll', offset);
-  // }
 
   ngOnDestroy(): void {
       this.disconnect()
